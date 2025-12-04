@@ -14,3 +14,7 @@ class NewBiomaterialPage(BasePage):
     @allure.step("Click on 'Ordering button'")
     def click_ordering_button(self):
         self.wait.until(EC.element_to_be_clickable(self.ORDERING_BUTTON)).click()
+
+        # self.newBiomaterialPage.click_ordering_button()
+        # self.analysisOrderingPage.is_opened()
+        # self.analysisOrderingPage.enter_order_number("7989000776")

@@ -1,22 +1,38 @@
 import allure
 import pytest
+import os
+from dotenv import load_dotenv
 from base.base_test import BaseTest
-
+load_dotenv()
 @allure.feature("Profile Functionality")
-class TestProfileFeature(BaseTest):
+class TestLogin(BaseTest):
 
     @allure.title("Profile Functionality")
     @allure.severity("CRITICAL")
     @pytest.mark.smoke
-    def test_first(self):
+    def test_login_with_clinic(self):
         self.loginPage.open()
-        self.loginPage.enter_login(self.data.LOGIN)
-        self.loginPage.enter_password(self.data.PASSWORD)
+        self.loginPage.enter_login(os.getenv("LOGIN1_VALID"))
+        self.loginPage.enter_password(os.getenv("PASSWORD1_VALID"))
         self.loginPage.click_submit_button()
         self.newBiomaterialPage.is_opened()
-        self.newBiomaterialPage.click_ordering_button()
+
+    def test_login_without_clinic(self):
+        self.loginPage.open()
+        self.loginPage.enter_login(os.getenv("LOGIN2_VALID"))
+        self.loginPage.enter_password(os.getenv("PASSWORD2_VALID"))
+        self.loginPage.click_submit_button()
         self.analysisOrderingPage.is_opened()
-        self.analysisOrderingPage.enter_order_number("7989000776")
+
+    def test_login_invalid(self):
+        self.loginPage.open()
+        self.loginPage.enter_login(os.getenv("LOGIN3_INVALID"))
+        self.loginPage.enter_password(os.getenv("PASSWORD3_INVALID"))
+        self.loginPage.click_submit_button()
+        banner = self.loginPage.get_invalid_data_banner()
+        assert banner is not None
+        assert banner.text == "Неверный логин или пароль"
+
 
 
 

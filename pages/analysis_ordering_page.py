@@ -8,7 +8,6 @@ from selenium.webdriver.support import expected_conditions as EC
 class AnalysisOrderingPage(BasePage):
 
     PAGE_URL = Links.ANALYSIS_ORDERING_PAGE
-
     SEARCH_FILD = ("xpath", "//input[@placeholder='Поиск по номеру заказа, ФИО и телефону']")
 
     @allure.step("Enter order number")
